@@ -15,6 +15,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { signUpSchema } from "@/schemas/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
@@ -30,8 +31,12 @@ const SignUpPage = () => {
     },
   });
 
-  function onSubmit(data: z.infer<typeof signUpSchema>) {
-    console.log(data);
+  async function onSubmit(data: z.infer<typeof signUpSchema>) {
+    await authClient.signUp.email({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    });
   }
   return (
     <Card>
