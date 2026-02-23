@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ui/theme-provider";
 import { ConvexClientProvider } from "@/components/web/ConvexClientProvider";
 import { getToken } from "@/lib/auth-server";
+import { Toaster } from "@/components/ui/sonner";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -41,6 +42,7 @@ export default async function RootLayout({
               {children}
             </ConvexClientProvider>
           </main>
+          <Toaster closeButton />
         </ThemeProvider>
       </body>
     </html>
