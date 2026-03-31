@@ -9,6 +9,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         port: "",
       },
+      {
+        hostname: "zany-butterfly-175.convex.cloud",
+        protocol: "https",
+        port: "",
+      },
     ],
   },
 };
