@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ui/theme-provider";
 import { ConvexClientProvider } from "@/components/web/ConvexClientProvider";
 import { getToken } from "@/lib/auth-server";
 import { Toaster } from "@/components/ui/sonner";
+import { Suspense } from "react";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -25,7 +26,6 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const token = await getToken();
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -38,9 +38,9 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <main className="max-w-7xl mx-auto w-full px-4 md:px-6 lg:px-8">
-            <ConvexClientProvider initialToken={token}>
-              {children}
-            </ConvexClientProvider>
+            <Suspense fallback={null}>
+              <ConvexClientProvider>{children}</ConvexClientProvider>
+            </Suspense>
           </main>
           <Toaster closeButton />
         </ThemeProvider>

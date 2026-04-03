@@ -3,9 +3,18 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { api } from "@/convex/_generated/api";
 import { fetchQuery } from "convex/nextjs";
+import { Metadata } from "next";
+import { cacheLife, cacheTag } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "Read our latest articles and insights",
+  category: "Web development",
+  authors: [{ name: "Roshan Shakya" }],
+};
 
 const BlogPage = () => {
   return (
@@ -18,14 +27,17 @@ const BlogPage = () => {
           Insights, thoughts and trends from our teams!
         </p>
       </div>
-      <Suspense fallback={<SkeletonUI />}>
-        <LoadBlogList />
-      </Suspense>
+      {/* <Suspense fallback={<SkeletonUI />}> */}
+      <LoadBlogList />
+      {/* </Suspense> */}
     </div>
   );
 };
 
 async function LoadBlogList() {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("blog");
   const data = await fetchQuery(api.posts.getPosts);
 
   return (
